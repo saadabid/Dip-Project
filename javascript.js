@@ -1,19 +1,27 @@
 let imgElement = document.getElementById('imageSrc');
 let inputElement = document.getElementById('fileInput');
-let src;
-let n =0;
-
 inputElement.addEventListener('change', (e) => {
   imgElement.src = URL.createObjectURL(e.target.files[0]);
 }, false);
+
+var canvas = document.getElementById('canvasOutput');
+var context = canvas.getContext("2d");
+var img = document.getElementById('imageSrc');
+
 imgElement.onload = function() {
   src = cv.imread(imgElement);
-  GrayFilter();
-  sketch();
-  Binarythreshold();
-  bluefilter();
-  cv.imshow('canvasOutput', src);
+  mainfunc(this);
 };
+
+
+let src;
+let n =0;
+var x = 0;
+var y = 0;
+var width = 600;
+var height = 500;
+
+
 
 function blurfunc(){
   console.log("blur apply");
@@ -29,6 +37,7 @@ function GrayFilter()
 {
   let dst = new cv.Mat();
   // You can try more different parameters
+  
   cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
   cv.imshow('grayconvas', dst);
 }
@@ -53,25 +62,6 @@ function Binarythreshold()
 
 function bluefilter()
 {
-  // let dst = new cv.Mat();
-  // // dst = src.clone();
-  // for (let i = 1; i < src.rows; i++) {
-  //     for (let j = 1; j < src.cols; j++) {
-  //         dst.ucharPtr(i, j)[1] = src.ucharPtr(i, j)[1];
-  //     }
-  // }
-  // cv.imshow('bluefilter', dst);
-  let dstx = new cv.Mat();
-  let dsty = new cv.Mat();
-  cv.cvtColor(src, src, cv.COLOR_RGB2GRAY, 0);
-  // You can try more different parameters
-  cv.Sobel(src, dstx, cv.CV_8U, 1, 0, 3, 1, 0, cv.BORDER_DEFAULT);
-  // cv.Sobel(src, dsty, cv.CV_8U, 0, 1, 3, 1, 0, cv.BORDER_DEFAULT);
-  // cv.Scharr(src, dstx, cv.CV_8U, 1, 0, 1, 0, cv.BORDER_DEFAULT);
-  // cv.Scharr(src, dsty, cv.CV_8U, 0, 1, 1, 0, cv.BORDER_DEFAULT);
-  cv.imshow('bluefilter', dstx);
-  // cv.imshow('canvasOutputy', dsty);
-  dstx.delete(); dsty.delete();
 }
 
 function rotate()
@@ -86,3 +76,79 @@ cv.warpAffine(src, dst, M, dsize, cv.INTER_LINEAR, cv.BORDER_CONSTANT, new cv.Sc
 cv.imshow('canvasOutput', dst);
 dst.delete(); M.delete();
 }
+
+function check()
+{
+  let row = 3, col = 4;
+  let img = cv.imread(imgElement);
+  let dst = new cv.Mat(img.rows, img.cols);
+  // let dst = new cv.MatVector();
+  // dst = img.clone();
+  if (img.isContinuous()) {
+    let dst = img.data[row * src.cols * src.channels() + col * src.channels()];
+}
+  // dst = img.ucharAt(row, col * img.channels() + 1);
+//   let rgbaPlanes = new cv.MatVector();
+//   // Split the Mat
+//   cv.split(img, rgbaPlanes);
+//   // Get R channel
+//   let R = rgbaPlanes.get(2);
+  cv.imshow('canvasOutput1', dst);
+  
+//   // Merge all channels
+//   cv.merge(rgbaPlanes, img);
+//  rgbaPlanes.delete(); R.delete();
+      
+}
+
+function bright()
+{
+  // let dst = new cv.Mat();
+  // src.convertTo(dst, -1,2.2,50);
+  // console.log("grayscale apply")
+  // var ImgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  // var pixel = ImgData.data;
+  // for(var i=0 ;i<pixel.lenght; i=i+4)
+  // {
+  //   var average = (pixel[i] + pixel[i+1] + pixel[i+2])/3;
+  //   pixel[i] = average;
+  //   pixel[i+1] = average;
+  //   pixel[i+2] = average;
+  // }
+  // ctx.putImageData(ImgData, 0, 0);
+  // ctx.drawImage(img, x, y, width, height);
+  // cv.imshow('canvasOutput', dst);
+}
+
+function mainfunc(img) {
+  
+    context.drawImage(img, 0, 0);
+    var ImgData = context.getImageData(0, 0, canvas.width, canvas.height);
+    var pixel = ImgData.data;
+      
+    var invert = function() {
+      for (var i = 0; i < data.length; i += 4) {
+        data[i]     = 255 - data[i];     // red
+        data[i + 1] = 255 - data[i + 1]; // green
+        data[i + 2] = 255 - data[i + 2]; // blue
+      }
+      context.putImageData(imageData, 0, 0);
+    };
+  
+    var grayscale = function() {
+      console.log("saad");
+      for(var i=0 ;i<pixel.lenght; i=i+4)
+      {
+        var average = (pixel[i] + pixel[i+1] + pixel[i+2])/3;
+        pixel[i] = average;
+        pixel[i+1] = average;
+        pixel[i+2] = average;
+      }
+      context.putImageData(ImgData, 0, 0);
+    };
+  
+    var invertbtn = document.getElementById('invertbtn');
+    invertbtn.addEventListener('click', invert);
+    var grayscalebtn = document.getElementById('grayscalebtn');
+    grayscalebtn.addEventListener('click', grayscale);
+  }

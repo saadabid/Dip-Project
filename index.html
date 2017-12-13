@@ -9,48 +9,87 @@
 
     <title>Editor</title>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="vendor\bootstrap\css\bootstrap.min.css">
   <link rel="stylesheet" href="navigation-dark.css">
   <link rel="stylesheet" href="stylesheet.css">
 
   <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   </head>
 <body>
-<nav class="menu-navigation-dark">
-    <a href="#"><i class="fa fa-camera-retro"></i><span>Pictures</span></a>
-    <a href="#"><i class="fa fa-crop" aria-hidden="true"></i><span>Crop</span></a>
-    <a href="#"><i class="fa fa-repeat" aria-hidden="true"></i><span>Rotate</span></a>
-    <a href="#"><i class="fa fa-expand" aria-hidden="true"></i><span>Resize</span></a>
-    <a href="#"><i class="fa fa-sun-o" aria-hidden="true"></i><span>Brightness</span></a>
-</nav>
-
-<div class="container-fluid">
+  <ul>
+      <img src="logo.png" alt="" style="margin-top:0px;" />
+    <li><a href="#"><i class="fa fa-facebook-official" aria-hidden="true"></i></a></li>
+    <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+    <li><a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a></li>
+  </ul>
+<div class="container">
   <div class="row">
 <div  class="col-md-3">
   
-  <div class="row"><div class="col-md-12 sideimg"><canvas id="sketchcanvas" ></canvas></div></div>
-  <div class="row"><div class="col-md-12 sideimg"><canvas id="grayconvas" ></canvas></div></div>
+  <div class="row">
+    <div class="col-md-12 sideimg">
+      <p>BRIGHTNESS</p>
+    <input id="brightnessId" type="range" value="100" min="1" max="200">
+  </div></div>
+  <div class="row">
+    <div class="col-md-12 sideimg">
+        <p>CONTRAST</p>
+    <input id="contrastId" type="range" value="100" min="1" max="200">
+  </div></div>
+  <div class="row">
+      <div class="col-md-12 sideimg">
+          <p>SATURATION</p>
+      <input id="saturateId" type="range" value="100" min="1" max="200">
+  </div></div>
+  <div class="row">
+      <div class="col-md-12 sideimg">
+      <p>HUE</p>
+      <input id="hueid" type="range" value="0" min="-200" max="200">
+  </div></div>
+  <div class="row">
+      <div class="col-md-12 sideimg">
+      <p>BLUR</p>
+      <input id="blurId" type="range" value="0" min="0" max="10">
+  </div></div>
+  <!-- <div class="row"><div class="col-md-12 sideimg"><canvas id="grayconvas" ></canvas></div></div>
   <div class="row"><div class="col-md-12 sideimg"><canvas id="binarycanvas" ></canvas></div></div>
-  <div class="row"><div class="col-md-12 sideimg"><canvas id="bluefilter" ></canvas></div></div>
+  <div class="row"><div class="col-md-12 sideimg"><canvas id="bluefilter" ></canvas></div></div> -->
   
 
 </div>
-  <div class="inputoutput col-md-6">
-
-    <canvas id="canvasOutput" ></canvas>
+  <div class=" col-md-6">
+  <canvas id="canvasOutput" width="600" height="500"></canvas>
   </div>
-  <div  class="col-md-3">
-      <div class="inputoutput smallcan">
-        <h2>UPLOAD IMAGE</h2>
-        <img id="imageSrc" alt="" />
-        </div>
+  <div  class="col-md-3" id="buttongroup">
+  <div class="row"><div class="col-md-12">
+      <button id="brightDcrbtn">-</button>
+      <button id="brightIncbtn">+</button>
+  </div></div>
+  <div class="row"><div class="col-md-12">
+      <button id="rotaterighbtn"><i class="fa fa-repeat" aria-hidden="true"></i></button>
+      <button id="rotateleftbtn"><i class="fa fa-undo" aria-hidden="true"></i></button>
+  </div></div>
+  <div class="row"><div class="col-md-12" id="filterbtncss">
+      <button id="grayscalebtn">GRAYSCALE</button>
+      </div></div>
+      <div class="row"><div class="col-md-12" id="filterbtncss">
+        <button id="invertbtn">INVERT</button>
+        </div></div>
+  <div class="row"><div class="col-md-12" id="filterbtncss">
+      <button id="undobtn">UNDO</button>
+      </div></div>
+
+      <div class="row"><div class="col-md-12" style="float:right;">
+          <div class="inputoutput smallcan">
+              <img id="imageSrc" alt="" />
+              </div>
+          </div></div>
+
   </div>
   </div>
   <div class="row">
       <div  class="col-md-4"></div>
       <div class="caption col-md-4"><input type="file" id="fileInput" name="file" /></div>
-      <button onclick="blurfunc()">Blur</button>
-      <button onclick="rotate()">rotate</button>
       <div  class="col-md-4"></div>
   </div>
 </div>
@@ -63,6 +102,6 @@ function onOpenCvReady() {
 }
 </script>
 <script async src="opencv.js" onload=" onOpenCvReady();" type="text/javascript"></script>
-<script src="javascript.js" type="text/javascript"></script>
+<script src="backupfile.js" type="text/javascript"></script>
 </body>
 </html>
